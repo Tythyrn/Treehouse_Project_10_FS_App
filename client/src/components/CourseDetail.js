@@ -51,7 +51,7 @@ export default class CourseDetail extends Component {
             <div className="course--header">
               <h4 className="course--label">Course</h4>
               <h3 className="course--title">{course.title}</h3>
-              <p>By {course.owner?.firstName} {course.owner?.lastName}</p>
+              <p>By {owner.firstName} {owner.lastName}</p>
             </div>
             <div className="course--description">
               <ReactMarkdown children={course.description}></ReactMarkdown>
@@ -76,5 +76,24 @@ export default class CourseDetail extends Component {
         </div>
       </div>
     );
+  }
+
+  // delete function for the delete button
+  delete = () => {
+    const { context } = this.props;
+    const owner = context.authenticatedUser;
+
+    context.data.deleteCourse(owner.emailAddress, owner.password, this.props.match.params.id)
+      .then( errors => {
+        if(errors.length){
+          this.setState( { errors } );
+        } else {
+          window.location.href = '/';
+        }
+      })
+    .catch(err => {
+      console.log(err);
+        this.props.history.push('/error');
+    });
   }
 }

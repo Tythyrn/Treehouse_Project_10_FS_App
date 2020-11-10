@@ -8,6 +8,7 @@ import {
 import Header from './components/Header';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
+import UpdateCourse from './components/UpdateCourse';
 import UserSignUp from './components/UserSignUp';
 import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
@@ -18,6 +19,7 @@ const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignOutWithContext = withContext(UserSignOut);
 const CourseswithContext = withContext(Courses);
+const UpdateCourseWithContext = withContext(UpdateCourse);
 const CourseDetailwithContext = withContext(CourseDetail);
 
 export default () => (
@@ -27,6 +29,7 @@ export default () => (
 
       <Switch>
         <Route exact path="/" component={CourseswithContext} />
+        <Route path="/courses/:id/update" component={UpdateCourseWithContext} />
         <Route path="/courses/:id" component={CourseDetailwithContext} />
         <Route path="/sign-in" component={UserSignInWithContext} />
         <Route path="/sign-up" component={UserSignUpWithContext} />
