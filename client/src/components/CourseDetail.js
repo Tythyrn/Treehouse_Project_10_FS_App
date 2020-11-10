@@ -11,21 +11,39 @@ export default class CourseDetail extends Component {
     const { context } = this.props;
 
     context.data.getCourseDetail(this.props.match.params.id)
-      .then(course => {this.setState({ course })})
+      .then(course => {
+        this.setState({ course })
+      })
       .catch(err => {
         this.props.history.push('/error');
       });
   }
 
   render() {
-    const {course} = this.state;
+    const {context} = this.props;
+    const {course} =this.state;
+
+    const authUser = context.authenticatedUser;
+    let owner = {...course.owner};
 
     return (
       <div>
         <div className="actions--bar">
           <div className="bounds">
-            <div className="grid-100"><span><NavLink className="button" to={`/courses/${course.id}/update`}>Update Course</NavLink><NavLink className="button" to="/">Delete Course</NavLink></span><NavLink
-                className="button button-secondary" to="/">Return to List</NavLink></div>
+            {authUser === null || authUser.id !== owner.id
+              ?
+                <div className="grid-100">
+                  <NavLink to="/" className="button button-secondary">Return to List</NavLink>
+                </div>
+              :
+                <div className="grid-100">
+                  <span>
+                    <NavLink to={`/courses/${course.id}/update`} className="button">Update Course</NavLink>
+                    <NavLink to="/" className="button" onClick={this.delete}>Delete Course</NavLink>
+                  </span>
+                  <NavLink to="/" className="button button-secondary">Return to List</NavLink>
+                </div>
+            }
           </div>
         </div>
         <div className="bounds course--detail">
