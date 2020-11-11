@@ -18,6 +18,14 @@ export default class UpdateCourse extends Component {
 
     context.data.getCourseDetail(this.props.match.params.id)
       .then(course => {
+
+        //Checks if owner and authenticated user matches.  If not, then sent to forbidden
+        //I feel like there is a better way to handle this
+        const owner = {...course.owner};
+        if(owner.emailAddress !== context.authenticatedUser.emailAddress){
+          return this.props.history.push('/forbidden');
+        }
+
         this.setState({ 
           id: course.id,
           owner: {...course.owner},
@@ -28,7 +36,11 @@ export default class UpdateCourse extends Component {
         })
       })
       .catch(err => {
-        this.props.history.push('/error');
+        if(!this.course) {
+          this.props.history.push('/notfound');
+        } else {
+          this.props.history.push('/error');
+        }
       });
   }
 

@@ -16,7 +16,11 @@ export default class CourseDetail extends Component {
         this.setState({ course })
       })
       .catch(err => {
-        this.props.history.push('/error');
+        if(!this.course) {
+          this.props.history.push('/notfound');
+        } else {
+          this.props.history.push('/error');
+        }
       });
   }
 
