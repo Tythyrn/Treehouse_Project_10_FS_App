@@ -29,24 +29,26 @@ const CreateCourseWithContext = withContext(CreateCourse);
 const UpdateCourseWithContext = withContext(UpdateCourse);
 const CourseDetailwithContext = withContext(CourseDetail);
 
-export default () => (
-  <Router>
-    <div>
-      <HeaderWithContext />
+export default function App() {
+  return (
+    <Router>
+      <div>
+        <HeaderWithContext />
 
-      {/* Switcher for the different paths */}
-      <Switch>
-        <Route exact path="/" component={CourseswithContext} />
-        <PrivateRoute path="/courses/create" component={CreateCourseWithContext} />
-        <PrivateRoute path="/courses/:id/update" component={UpdateCourseWithContext} />
-        <Route path="/courses/:id" component={CourseDetailwithContext} />
-        <Route path="/signin" component={UserSignInWithContext} />
-        <Route path="/signup" component={UserSignUpWithContext} />
-        <Route path="/signout" component={UserSignOutWithContext} /> 
-        <Route path="/forbidden" component={Forbidden} />
-        <Route path="/error" component={UnhandledError} />
-        <Route component={NotFound} />
-      </Switch>
-    </div>
-  </Router>
-)
+        {/* Switcher for the different paths */}
+        <Switch>
+          <Route exact path="/" component={CourseswithContext} />
+          <PrivateRoute path="/courses/create" component={CreateCourseWithContext} />
+          <PrivateRoute path="/courses/:id/update" component={UpdateCourseWithContext} />
+          <Route path="/courses/:id" component={CourseDetailwithContext} />
+          <Route path="/signin" component={UserSignInWithContext} />
+          <Route path="/signup" component={UserSignUpWithContext} />
+          <Route path="/signout" component={UserSignOutWithContext} /> 
+          <Route path="/forbidden" component={Forbidden} />
+          <Route path="/error" component={UnhandledError} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    </Router>
+  )
+}
