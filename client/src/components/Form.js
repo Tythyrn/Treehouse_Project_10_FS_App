@@ -1,5 +1,8 @@
 import React from 'react';
 
+
+//This is a general for component that was created from the React Auth course
+//In general it allows you to easily handle all the form functionality in one file
 export default (props) => {
   const {
     cancel,

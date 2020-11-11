@@ -12,6 +12,7 @@ export default class UserSignUp extends Component {
     errors: [],
   }
 
+  //renders page
   render() {
     const {
       firstName,
@@ -71,7 +72,7 @@ export default class UserSignUp extends Component {
               </React.Fragment>
             )} />
           <p>
-            Already have a user account? <Link to="/sign-in">Click here</Link> to sign in!
+            Already have a user account? <Link to="/signin">Click here</Link> to sign in!
           </p>
         </div>
       </div>
@@ -89,6 +90,11 @@ export default class UserSignUp extends Component {
     });
   }
 
+  /**
+   * submit takes the state of all properties and creates a user object.
+   * then checks if passwords match, if they do then calls createUser to
+   * create a new user and sign the user in
+   *  */ 
   submit = () => {
     const { context } = this.props;
 

@@ -10,6 +10,7 @@ export default class CourseDetail extends Component {
   componentDidMount(){
     const { context } = this.props;
 
+    //Pulls course details in from the API
     context.data.getCourseDetail(this.props.match.params.id)
       .then(course => {
         this.setState({ course })
@@ -19,6 +20,7 @@ export default class CourseDetail extends Component {
       });
   }
 
+  //Renders the page
   render() {
     const {context} = this.props;
     const {course} =this.state;
@@ -30,6 +32,7 @@ export default class CourseDetail extends Component {
       <div>
         <div className="actions--bar">
           <div className="bounds">
+          {/* Checks if the user is logged in or the same user that created the course and hides update/delete buttons*/}
             {authUser === null || authUser.id !== owner.id
               ?
                 <div className="grid-100">
@@ -78,7 +81,9 @@ export default class CourseDetail extends Component {
     );
   }
 
-  // delete function for the delete button
+  /**
+   * delete() calls the deleteCourse function which deletes the course
+   */
   delete = () => {
     const { context } = this.props;
     const owner = context.authenticatedUser;

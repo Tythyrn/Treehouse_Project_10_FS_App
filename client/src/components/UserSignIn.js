@@ -9,6 +9,7 @@ export default class UserSignIn extends Component {
     errors: [],
   }
 
+  //renders the page
   render() {
     const {
       emailAddress,
@@ -44,7 +45,7 @@ export default class UserSignIn extends Component {
               </React.Fragment>
             )} />
           <p>
-            Don't have a user account? <Link to="/sign-up">Click here</Link> to sign up!
+            Don't have a user account? <Link to="/signup">Click here</Link> to sign up!
           </p>
         </div>
       </div>
@@ -62,9 +63,10 @@ export default class UserSignIn extends Component {
     });
   }
 
+  //submit() takes the credentails entered and attempts to sign the user in
   submit = () => {
     const {context} = this.props;
-    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const { from } = this.props.location.state || { from: { pathname: '/' } };  //sends user back to page they were previously on, if any
     const {emailAddress, password} = this.state;
     context.actions.signIn(emailAddress, password)
       .then(user => {

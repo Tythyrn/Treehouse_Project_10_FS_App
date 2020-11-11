@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+//Renders the header of the app
 export default class Header extends Component {
   render() {
     const {context} = this.props;
@@ -10,15 +11,16 @@ export default class Header extends Component {
         <div className="bounds">
         <Link to="/"><h1 className="header--logo">Courses</h1></Link>
           <nav>
+          {/* changes the header buttons depending on if the user is logged in */}
             {authUser ?
               <React.Fragment>
                 <span>Welcome, {authUser.firstName}</span>
-                <Link to="/sign-out">Sign Out</Link>
+                <Link to="/signout">Sign Out</Link>
               </React.Fragment>
             :
               <React.Fragment>
-                <Link className="signup" to="/sign-up">Sign Up</Link>
-                <Link className="signin" to="/sign-in">Sign In</Link>
+                <Link className="signup" to="/signup">Sign Up</Link>
+                <Link className="signin" to="/signin">Sign In</Link>
               </React.Fragment>
             }
           </nav>

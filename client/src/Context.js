@@ -8,7 +8,7 @@ export class Provider extends Component {
 
   constructor() {
     super();
-    this.data = new Data();
+    this.data = new Data(); //gets all of the Data file into a variable
   }
 
   state = {
@@ -18,6 +18,7 @@ export class Provider extends Component {
   render() {
     const {authenticatedUser} = this.state;
 
+    //This assigns the authUser, data functions and signin/out functions to value
     const value = {
       authenticatedUser,
       data: this.data,
@@ -27,6 +28,7 @@ export class Provider extends Component {
        }
     };
 
+    //value gets returned and is usable by all components subscribed to context
     return (
       <Context.Provider value={value}>
         {this.props.children}
@@ -34,7 +36,11 @@ export class Provider extends Component {
     );
   }
 
-  
+  /**
+   * Sign in to user account
+   * @param {string} emailAddress - email address of user
+   * @param {string} password - password of user
+   */
   signIn = async (emailAddress, password) => {
     const user = await this.data.getUser(emailAddress, password);
     if(user !== null) {
@@ -49,6 +55,9 @@ export class Provider extends Component {
     return user;
   }
 
+  /**
+   * Sign out of user account
+   */
   signOut = () => {
     this.setState(() => {
       return {
@@ -66,7 +75,6 @@ export const Consumer = Context.Consumer;
  * @param {class} Component - A React component.
  * @returns {function} A higher-order component.
  */
-
 export default function withContext(Component) {
   return function ContextComponent(props) {
     return (

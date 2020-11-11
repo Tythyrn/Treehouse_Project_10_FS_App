@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Form from './Form';
 
-export default class UpdateCourse extends Component {
+export default class CreateCourse extends Component {
+  //sets initial state for each property needed to create a new course
   state = {
-    id: '',
     owner: '',
     title: '',
     description: '',
@@ -12,27 +12,13 @@ export default class UpdateCourse extends Component {
     errors: [],
   }
 
-  //gets course details for the course being updated
   componentDidMount(){
     const { context } = this.props;
 
-    context.data.getCourseDetail(this.props.match.params.id)
-      .then(course => {
-        this.setState({ 
-          id: course.id,
-          owner: {...course.owner},
-          title: course.title,
-          description: course.description,
-          estimatedTime: course.estimatedTime,
-          materialsNeeded: course.materialsNeeded,
-        })
-      })
-      .catch(err => {
-        this.props.history.push('/error');
-      });
+    //sets the owner to the logged in user
+    this.setState({owner: context.authenticatedUser});
   }
 
-  //renders the page with the course details in the fields
   render() {
     const {
       owner,
@@ -43,15 +29,16 @@ export default class UpdateCourse extends Component {
       errors
     } = this.state;
 
+    //renders the page
     return (
       <div className="bounds course--detail">
-        <h1>Update Course</h1>
+        <h1>Create Course</h1>
         <div>
           <Form 
             cancel={this.cancel}
             errors={errors}
             submit={this.submit}
-            submitButtonText="Update Course"
+            submitButtonText="Create Course"
             elements={() => (
               <React.Fragment>
                 <div className="grid-66">
@@ -124,7 +111,9 @@ export default class UpdateCourse extends Component {
     );
   }
 
-  //updates state of properties as changes are made in the fields
+  /**
+   * change() triggers evertime the field has a change and updates the value of the state for that field
+   */
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -136,13 +125,13 @@ export default class UpdateCourse extends Component {
     });
   }
 
-  //this takes all the states and creates a course object which is then sent to updateCourse
+  /**
+   * submit() takes the current state of all the properties and calls createCourse to create a new course
+   */
   submit = () => {
     const { context } = this.props;
-    const  authUser  = context.authenticatedUser;
 
     const {
-      id,
       owner,
       title,
       description,
@@ -151,7 +140,6 @@ export default class UpdateCourse extends Component {
     } = this.state;
 
     const course = {
-      id,
       owner,
       title,
       description,
@@ -159,12 +147,12 @@ export default class UpdateCourse extends Component {
       materialsNeeded,
     };
 
-    context.data.updateCourse( course, authUser.emailAddress, authUser.password )
+    context.data.createCourse(course, owner.emailAddress, owner.password )
       .then( errors => {
         if(errors.length){
           this.setState( { errors } );
         } else {
-          this.props.history.push(`/courses/${id}`);
+          this.props.history.push(`/`);
         }
       })
       .catch(err => {
@@ -173,6 +161,7 @@ export default class UpdateCourse extends Component {
       });
   }
 
+  //returns you to the root page
   cancel = () => {
     this.props.history.push('/');
   }

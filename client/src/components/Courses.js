@@ -9,6 +9,7 @@ export default class Courses extends Component {
   componentDidMount(){
     const { context } = this.props;
 
+    //calls the courses api which returns all courses
     context.data.getCourses()
       .then(courses => {this.setState({ courses })})
       .catch(err => {
@@ -19,6 +20,7 @@ export default class Courses extends Component {
   render() {
     const {courses} = this.state;
 
+    //renders each course returned by the API
     return (
       <div className="bounds">
         {courses.map(course => {
